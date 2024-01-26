@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{cleveref}
+\newcommand{\zg}{\mathbb{Z}_{>1}}
+\newcommand{\zp}{\mathbb{Z}_{\geq 1}}
+\newcommand{\znn}{\mathbb{Z}_{\geq 0}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtheorem{claim}{Claim}
+\newtheorem{cor}{Corollary}
+
+\title{Introduction to Number Theory HW1}
+\author{Angus Joshi}
+\begin{document}
+  \maketitle
+  \begin{claim}\label{minusFactors}
+    For $n \in \zg$, $x \in \Z$, $x^n - 1 = (x - 1)(x^{n-1} + x^{n-2} + ... + 1)$.
+  \end{claim}
+  \begin{proof}
+    Simply multiplying out,
+    \begin{align*}
+      (x - 1)(x^{n-1} + x^{n-2} + ... + 1) &= x^n + x^{n-1} + ... + x - x^{n-1} - x^{n-2} - ... - 1 \\
+      &= x^n - 1.
+    \end{align*}
+  \end{proof}
+  \begin{claim}\label{minusNotPrime}
+    For $d, n \in \zg$, if $d^n - 1$ is prime then $d = 2$.
+  \end{claim}
+  \begin{proof}
+    Suppose $d^n - 1$ is prime and $d>2$. Then by \cref{minusFactors} $d^n - 1 = (d-1)(d^{n-1} + ... + 1)$.
+    It follows that $(d - 1) | d^n - 1$. Noting that $d - 1 > 1$ by supposition, this contradicts $d^n - 1$ being prime. 
+    I conclude $d \leq 2$, which combining with $d > 1$ gives $d = 2$.
+  \end{proof}
+  \begin{claim}\label{ncomp}
+    If $n = ab$ for $a, b \in \zg$, then $2^n - 1$ is composite.
+  \end{claim}
+  \begin{proof}
+    Suppose $n = ab$ for $a, b \in \zg$. Then,
+    \begin{align*}
+      2^n - 1 &= 2^{ab} - 1 \\
+              &= \left( 2^a \right)^b - 1.
+    \end{align*}
+    Since $a > 1$ I have $2^a > 2$. Applying the contrapositive of \cref{minusNotPrime} I find $2^n - 1$ is not prime.
+  \end{proof}
+  \begin{claim}
+    If $2^n - 1$ is prime then $n$ is prime.
+  \end{claim}
+  \begin{proof}
+    Precisely the contrapositive of \cref{ncomp}.
+  \end{proof}
+  \begin{claim}\label{oddFactor}
+    For $n \in \zg$ odd, $x \in \Z$, $x^n + 1 = (x + 1)(x^{n - 1} - x^{n - 2} + ... + 1)$.
+  \end{claim}
+  \begin{proof}
+    Again multiplying out, 
+    \begin{align*}
+      (x + 1)(x^{n - 1} - x^{n - 2} + ... + 1) &= x^n - x^{n - 1} + x^{n - 2} - ... + 1 \\
+                                              &\quad + x^{n - 1} - x^{n - 2} + ... + x \\
+                                              &= x^n + 1.
+    \end{align*}
+    Note that $n$ odd was used to ensure the correct sign in the alternating sum.
+  \end{proof}
+  \begin{claim}\label{twoN}
+    For $n \in \zp$ if $2^n + 1$ is prime and $n$ is odd, then $n = 1$.
+  \end{claim}
+  \begin{proof}
+    Suppose $n > 1$ is odd and $2^n + 1$ is prime. Then by \cref{oddFactor},
+    \begin{align*}
+      (2^n + 1) = (2 + 1)(2^{n - 1} - ... + 1).
+    \end{align*}
+    So $3 | 2^n + 1$. But this contradicts $2^n + 1$ being prime, from which I find
+    $n = 1$.
+  \end{proof}
+  \begin{claim}\label{notDivByOdd}
+    For $n \in \zp$ if $2^n + 1$ is prime then there is no odd $q > 1$ that divides $n$.
+  \end{claim}
+  \begin{proof} 
+    Suppose an odd $q > 1$ divides $n$. That is, for some $m$ $n = qm$. Then using essentially the same argument as
+    \cref{twoN},
+    \begin{align*}
+      (2^n + 1) &= 2^{mq} + 1 \\
+                &= \left( 2^{m} \right)^q + 1 \\
+                &= (2^m + 1)((2^m)^{n - 1} - ... + 1).
+    \end{align*}
+    It follows that $2^m + 1$ divides $2^n + 1$, which is a contradiction to primeness.
+  \end{proof}
+  \begin{claim}
+    For $n \in \zp$ if $2^n + 1$ is prime then $n = 2^m$ for some $m \in \znn$.
+  \end{claim}
+  \begin{proof}
+    From \cref{notDivByOdd} I immediately find $n$ has no odd factors. The only non-odd
+    prime number is $2$, so the unique prime factorisation of $n$ must consist only of $2$s, completing the proof.
+  \end{proof}
+\end{document}
